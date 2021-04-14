@@ -1,3 +1,4 @@
+const path = require("path");
 const express = require("express");
 const bodyParser = require("body-parser");
 
@@ -9,11 +10,15 @@ const sayHi = (req, res) => {
     res.send("Hi!");
 };
   
-app.get("/", sayHi);
+app.get("/", (req, res) => {
+  res.sendFile(path.join(__dirname, "index.html"));
+});
 
 app.post("/add", (req, res) => {
     const { a, b } = req.body;
-    res.send(`The sum is: ${a + b}`);
+    res.send({
+      result: parseInt(a) + parseInt(b)
+    });
 });
 
 app.listen(5000, () => {
